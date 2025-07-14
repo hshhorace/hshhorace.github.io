@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://hshhorace.github.io/sitemap.xml
+Host: https://hshhorace.github.io
