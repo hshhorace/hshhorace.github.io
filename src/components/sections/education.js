@@ -128,7 +128,7 @@ const About = () => {
   const skills = ['JavaScript (ES6+)', 'TypeScript', 'React', 'Eleventy', 'Node.js', 'WordPress'];
 
   return (
-    <StyledAboutSection id="about" ref={revealContainer}>
+    <StyledAboutSection id="education" ref={revealContainer}>
       <h2 className="numbered-heading">个人简介</h2>
 
       <div className="inner">

@@ -60,28 +60,17 @@ const Hero = () => {
   }, []);
 
   const one = <h1>你好，我是</h1>;
-  const two = <h2 className="big-heading">胡书豪.</h2>;
-  const three = <h3 className="big-heading">计算机科学与技术专业硕士研究生.</h3>;
+  const two = <h2 className="big-heading">胡书豪</h2>;
+  const three = <h3>计算机科学与技术专业，硕士研究生</h3>;
   const four = (
     <>
-      <p>
-        I’m a software engineer specializing in building (and occasionally designing) exceptional
-        digital experiences. Currently, I’m focused on building accessible, human-centered products
-        at{' '}
-        <a href="https://upstatement.com/" target="_blank" rel="noreferrer">
-          Upstatement
-        </a>
-        .
-      </p>
+      <p>我目前是厦门大学计算机科学与技术专业的研究生，预计于2026年6月获得硕士学位</p>
+      <p>我正在寻找算法工程师的工作。</p>
     </>
   );
   const five = (
-    <a
-      className="email-link"
-      href="https://www.newline.co/courses/build-a-spotify-connected-app"
-      target="_blank"
-      rel="noreferrer">
-      Check out my course!
+    <a href="/Shuhao_Hu_Resume.pdf" className="email-link">
+      获取简历
     </a>
   );
 
