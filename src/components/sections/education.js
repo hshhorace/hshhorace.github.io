@@ -129,7 +129,7 @@ const About = () => {
 
   return (
     <StyledAboutSection id="education" ref={revealContainer}>
-      <h2 className="numbered-heading">个人简介</h2>
+      <h2 className="numbered-heading">教育经历</h2>
 
       <div className="inner">
         <StyledText>
@@ -173,7 +173,7 @@ const About = () => {
           <div className="wrapper">
             <StaticImage
               className="img"
-              src="../../images/me.jpg"
+              src="../../../static/me.jpeg"
               width={500}
               quality={95}
               formats={['AUTO', 'WEBP', 'AVIF']}
