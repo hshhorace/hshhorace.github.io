@@ -1,26 +1,18 @@
 module.exports = {
-  email: 'brittany.chiang@gmail.com',
+  email: 'horacehsh@outlook.com',
 
   socialMedia: [
     {
+      name: 'Email',
+      url: 'mailto:horacehsh@outlook.com',
+    },
+    // {
+    //   name: 'Linkedin',
+    //   url: 'https://www.linkedin.com/in/yehan-fan/',
+    // },
+    {
       name: 'GitHub',
-      url: 'https://github.com/bchiang7',
-    },
-    {
-      name: 'Instagram',
-      url: 'https://www.instagram.com/bchiang7',
-    },
-    {
-      name: 'Twitter',
-      url: 'https://twitter.com/bchiang7',
-    },
-    {
-      name: 'Linkedin',
-      url: 'https://www.linkedin.com/in/bchiang7',
-    },
-    {
-      name: 'Codepen',
-      url: 'https://codepen.io/bchiang7',
+      url: 'https://github.com/hshhorace',
     },
   ],
 
@@ -34,12 +26,12 @@ module.exports = {
       url: '/#jobs',
     },
     {
-      name: 'Work',
-      url: '/#projects',
+      name: 'Education',
+      url: '/#education',
     },
     {
-      name: 'Contact',
-      url: '/#contact',
+      name: 'Projects',
+      url: '/#projects',
     },
   ],
 
