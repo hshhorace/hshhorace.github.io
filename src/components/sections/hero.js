@@ -59,29 +59,21 @@ const Hero = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  const one = <h1>你好，我是</h1>;
-  const two = <h2 className="big-heading">胡书豪.</h2>;
-  const three = <h3 className="big-heading">计算机科学与技术专业硕士研究生.</h3>;
+  const one = <h1>Hi, my name is</h1>;
+  const two = <h2 className="big-heading">Shuhao Hu.</h2>;
+  const three = <h4 className="small-heading">Computer Science and Technology Master.</h4>;
   const four = (
     <>
       <p>
-        I’m a software engineer specializing in building (and occasionally designing) exceptional
-        digital experiences. Currently, I’m focused on building accessible, human-centered products
-        at{' '}
-        <a href="https://upstatement.com/" target="_blank" rel="noreferrer">
-          Upstatement
-        </a>
-        .
+        I am currently a postgraduate student in Computer Science and Technology at Xiamen
+        University and I expect to obtain a master's degree in June 2026.
       </p>
+      <p>I'm looking for full time jobs after graduation.</p>
     </>
   );
   const five = (
-    <a
-      className="email-link"
-      href="https://www.newline.co/courses/build-a-spotify-connected-app"
-      target="_blank"
-      rel="noreferrer">
-      Check out my course!
+    <a href="/Shuhao_Hu_Resume.pdf" className="email-link">
+      Click to get my resume
     </a>
   );
 
