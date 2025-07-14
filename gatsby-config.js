@@ -2,9 +2,8 @@ const config = require('./src/config');
 
 module.exports = {
   siteMetadata: {
-    title: 'Brittany Chiang',
-    description:
-      'Brittany Chiang is a software engineer who specializes in building (and occasionally designing) exceptional digital experiences.',
+    title: 'Shuhao Hu',
+    description: 'Fan Yehan is a master who specializes in computer science.',
     siteUrl: 'https://hshhorace.github.io', // No trailing slash allowed!
     image: '/og.png', // Path to your image you placed in the 'static' folder
     twitterUsername: '@bchiang7',
