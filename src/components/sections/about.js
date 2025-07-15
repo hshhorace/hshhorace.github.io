@@ -19,6 +19,11 @@ const StyledAboutSection = styled.section`
   }
 `;
 const StyledText = styled.div`
+  p {
+    text-indent: 2em; // 缩进
+    line-height: 1.4; // 行间距
+  }
+
   ul.skills-list {
     display: grid;
     grid-template-columns: repeat(2, minmax(140px, 200px));
@@ -125,7 +130,7 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['JavaScript (ES6+)', 'TypeScript', 'React', 'Eleventy', 'Node.js', 'WordPress'];
+  const skills = ['Python', 'C++', 'Deep learning', 'Pytorch', 'CV', 'MLLM'];
 
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
@@ -135,33 +140,21 @@ const About = () => {
         <StyledText>
           <div>
             <p>
-              Hello! My name is Brittany and I enjoy creating things that live on the internet. My
-              interest in web development started back in 2012 when I decided to try editing custom
-              Tumblr themes — turns out hacking together a custom reblog button taught me a lot
-              about HTML &amp; CSS!
+              您好，我是胡书豪，现为厦门大学计算机科学与技术专业硕士研究生，本科毕业于天津大学。
+              我的研究方向主要聚焦于多模态深度学习与计算机视觉算法，具备扎实的C++和Python编程能力，
+              精通PyTorch框架以及CNN、Transformer等前沿神经网络架构。
             </p>
-
             <p>
-              Fast-forward to today, and I’ve had the privilege of working at{' '}
-              <a href="https://us.mullenlowe.com/">an advertising agency</a>,{' '}
-              <a href="https://starry.com/">a start-up</a>,{' '}
-              <a href="https://www.apple.com/">a huge corporation</a>, and{' '}
-              <a href="https://scout.camd.northeastern.edu/">a student-led design studio</a>. My
-              main focus these days is building accessible, inclusive products and digital
-              experiences at <a href="https://upstatement.com/">Upstatement</a> for a variety of
-              clients.
+              在学术方面，我参与了多项高水平论文研究，主导并完成了K-12艺术教育美学评估多模态数据集与模型设计，
+              以及长尾视觉识别中的专家协作学习方法，并在主流数据集上取得了领先的实验效果。
             </p>
-
             <p>
-              I also recently{' '}
-              <a href="https://www.newline.co/courses/build-a-spotify-connected-app">
-                launched a course
-              </a>{' '}
-              that covers everything you need to build a web app with the Spotify API using Node
-              &amp; React.
+              此外，我还拥有丰富的项目实践经验，参与过教育美育评价系统、数据中心可视化平台和古籍汉字修复等项目，
+              能够独立承担算法研发、系统架构设计和前后端协同开发等工作。
             </p>
+            <p>希望能将我的专业技能和创新能力应用于实际场景，为团队和行业创造更大价值。</p>
 
-            <p>Here are a few technologies I’ve been working with recently:</p>
+            <p>我的专业技能和技术栈如下：</p>
           </div>
 
           <ul className="skills-list">

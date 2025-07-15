@@ -9,14 +9,5 @@ department: '计算机科学与技术专业，工学学士学位'
 url: 'https://www.tju.edu.cn/'
 ---
 
-- Achieved Highest Distinction (GPA: 3.71 / 4.0)
-- With distinction in Multimedia Communication focus areas
-- Undertook dissertation on Semantic Segmentation for Point Cloud Scenes
-- Notable modules taken:
-  - Telecommunications Systems
-  - Computer Vision
-  - Internet Protocols
-  - Software Engineering
-  - Database and its Applications
-  - Image and Video Processing
-  - Internet Applications
+- 待补充
+  - 待补充

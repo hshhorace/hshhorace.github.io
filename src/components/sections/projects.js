@@ -264,10 +264,8 @@ const Projects = () => {
   };
 
   return (
-    <section id="research">
-      <h2 className="numbered-heading" ref={revealTitle}>
-        项目经历
-      </h2>
+    <section id="projects">
+      <h2 className="numbered-heading">项目经历</h2>
 
       <StyledProjectsSection>
         <ul className="projects-grid">
