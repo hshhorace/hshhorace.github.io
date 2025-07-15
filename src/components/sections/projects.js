@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import React, { useEffect, useRef, useState } from 'react';
+import { graphql, useStaticQuery } from 'gatsby';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
 import { srConfig } from '@config';

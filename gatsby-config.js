@@ -2,8 +2,8 @@ const config = require('./src/config');
 
 module.exports = {
   siteMetadata: {
-    title: 'Shuhao Hu',
-    description: 'Fan Yehan is a master who specializes in computer science.',
+    title: '胡书豪个人主页',
+    description: '胡书豪个人主页',
     siteUrl: 'https://hshhorace.github.io', // No trailing slash allowed!
     image: '/og.png', // Path to your image you placed in the 'static' folder
     twitterUsername: '@bchiang7',
@@ -19,8 +19,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: 'Shuhao Hu',
-        short_name: 'Shuhao Hu',
+        name: '胡书豪',
+        short_name: '胡书豪',
         start_url: '/',
         background_color: config.colors.darkNavy,
         theme_color: config.colors.navy,
