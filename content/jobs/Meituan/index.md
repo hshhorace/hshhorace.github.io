@@ -1,10 +1,10 @@
 ---
-date: '2017-12-21'
-title: 'UI Engineer Co-op'
-company: 'Apple'
-location: 'Cupertino, CA'
-range: 'July - December 2017'
-url: 'https://www.apple.com/music/'
+date: '2025-05-23'
+title: '音视频工程师'
+company: '美团'
+location: '北京市'
+range: '2025.05 —— 至今'
+url: 'https://www.meituan.com/'
 ---
 
 - Developed and styled interactive web applications for Apple Music using Ember and SCSS

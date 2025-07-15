@@ -55,9 +55,9 @@ const Contact = () => {
 
   return (
     <StyledContactSection id="contact" ref={revealContainer}>
-      <h2 className="numbered-heading overline">What’s Next?</h2>
+      <h2 className="numbered-heading overline">所获荣誉</h2>
 
-      <h2 className="title">Get In Touch</h2>
+      <h2 className="title">个人奖项</h2>
 
       <p>
         Although I’m not currently looking for any new opportunities, my inbox is always open.

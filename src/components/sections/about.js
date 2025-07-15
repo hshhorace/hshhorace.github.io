@@ -70,6 +70,8 @@ const StyledPic = styled.div`
 
       &:after {
         transform: translate(8px, 8px);
+        //top: 15px;
+        //left: 15px;
       }
 
       .img {
@@ -81,8 +83,6 @@ const StyledPic = styled.div`
     .img {
       position: relative;
       border-radius: var(--border-radius);
-      mix-blend-mode: multiply;
-      filter: grayscale(100%) contrast(1);
       transition: var(--transition);
     }
 
@@ -106,8 +106,8 @@ const StyledPic = styled.div`
 
     &:after {
       border: 2px solid var(--green);
-      top: 14px;
-      left: 14px;
+      top: 20px;
+      left: 20px;
       z-index: -1;
     }
   }

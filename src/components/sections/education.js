@@ -1,119 +1,187 @@
-import React, { useEffect, useRef } from 'react';
-import { StaticImage } from 'gatsby-plugin-image';
+import React, { useState, useEffect, useRef } from 'react';
+import { useStaticQuery, graphql } from 'gatsby';
+import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 import { srConfig } from '@config';
+import { KEY_CODES } from '@utils';
 import sr from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
 
-const StyledAboutSection = styled.section`
-  max-width: 900px;
-
+const StyledEducationSection = styled.section`
   .inner {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    grid-gap: 50px;
-
-    @media (max-width: 768px) {
+    display: flex;
+    margin: 0 auto;
+    max-width: 900px;
+    @media (max-width: 600px) {
       display: block;
     }
-  }
-`;
-const StyledText = styled.div`
-  ul.skills-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(140px, 200px));
-    grid-gap: 0 10px;
-    padding: 0;
-    margin: 20px 0 0 0;
-    overflow: hidden;
-    list-style: none;
-
-    li {
-      position: relative;
-      margin-bottom: 10px;
-      padding-left: 20px;
-      font-family: var(--font-mono);
-      font-size: var(--fz-xs);
-
-      &:before {
-        content: '▹';
-        position: absolute;
-        left: 0;
-        color: var(--green);
-        font-size: var(--fz-sm);
-        line-height: 12px;
-      }
+    // Prevent container from jumping
+    @media (min-width: 700px) {
+      min-height: 340px;
     }
   }
 `;
-const StyledPic = styled.div`
+
+const StyledTabList = styled.div`
   position: relative;
-  max-width: 300px;
-
-  @media (max-width: 768px) {
-    margin: 50px auto 0;
-    width: 70%;
+  z-index: 3;
+  width: max-content;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  @media (max-width: 600px) {
+    display: flex;
+    overflow-x: auto;
+    width: calc(100% + 100px);
+    padding-left: 50px;
+    margin-left: -50px;
+    margin-bottom: 30px;
   }
-
-  .wrapper {
-    ${({ theme }) => theme.mixins.boxShadow};
-    display: block;
-    position: relative;
-    width: 100%;
-    border-radius: var(--border-radius);
-    background-color: var(--green);
-
-    &:hover,
-    &:focus {
-      outline: 0;
-      transform: translate(-4px, -4px);
-
-      &:after {
-        transform: translate(8px, 8px);
+  @media (max-width: 480px) {
+    width: calc(100% + 50px);
+    padding-left: 25px;
+    margin-left: -25px;
+  }
+  li {
+    &:first-of-type {
+      @media (max-width: 600px) {
+        margin-left: 50px;
       }
-
-      .img {
-        filter: none;
-        mix-blend-mode: normal;
+      @media (max-width: 480px) {
+        margin-left: 25px;
       }
     }
-
-    .img {
-      position: relative;
-      border-radius: var(--border-radius);
-      mix-blend-mode: multiply;
-      filter: grayscale(100%) contrast(1);
-      transition: var(--transition);
-    }
-
-    &:before,
-    &:after {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: var(--border-radius);
-      transition: var(--transition);
-    }
-
-    &:before {
-      top: 0;
-      left: 0;
-      background-color: var(--navy);
-      mix-blend-mode: screen;
-    }
-
-    &:after {
-      border: 2px solid var(--green);
-      top: 14px;
-      left: 14px;
-      z-index: -1;
+    &:last-of-type {
+      @media (max-width: 600px) {
+        padding-right: 50px;
+      }
+      @media (max-width: 480px) {
+        padding-right: 25px;
+      }
     }
   }
 `;
 
-const About = () => {
+const StyledTabButton = styled.button`
+  ${({ theme }) => theme.mixins.link};
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--tab-height);
+  padding: 0 20px 2px;
+  border-left: 2px solid var(--lightest-navy);
+  background-color: transparent;
+  color: ${({ isActive }) => (isActive ? 'var(--green)' : 'var(--slate)')};
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs);
+  text-align: left;
+  white-space: nowrap;
+  @media (max-width: 768px) {
+    padding: 0 15px 2px;
+  }
+  @media (max-width: 600px) {
+    ${({ theme }) => theme.mixins.flexCenter};
+    min-width: 120px;
+    padding: 0 15px;
+    border-left: 0;
+    border-bottom: 2px solid var(--lightest-navy);
+    text-align: center;
+  }
+  &:hover,
+  &:focus {
+    background-color: var(--light-navy);
+  }
+`;
+
+const StyledHighlight = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 2px;
+  height: var(--tab-height);
+  border-radius: var(--border-radius);
+  background: var(--green);
+  transform: translateY(calc(${({ activeTabId }) => activeTabId} * var(--tab-height)));
+  transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition-delay: 0.1s;
+  @media (max-width: 600px) {
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    max-width: var(--tab-width);
+    height: 2px;
+    margin-left: 50px;
+    transform: translateX(calc(${({ activeTabId }) => activeTabId} * var(--tab-width)));
+  }
+  @media (max-width: 480px) {
+    margin-left: 25px;
+  }
+`;
+
+const StyledTabPanels = styled.div`
+  position: relative;
+  width: 100%;
+  margin-left: 20px;
+  @media (max-width: 600px) {
+    margin-left: 0;
+  }
+`;
+
+const StyledTabPanel = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 10px 5px;
+  ul {
+    ${({ theme }) => theme.mixins.fancyList};
+  }
+  h3 {
+    margin-bottom: 2px;
+    font-size: var(--fz-xxl);
+    font-weight: 500;
+    line-height: 1.3;
+    .company {
+      color: var(--green);
+    }
+  }
+  .range {
+    margin-bottom: 25px;
+    color: var(--light-slate);
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+  }
+`;
+
+const Education = () => {
+  const data = useStaticQuery(graphql`
+    query {
+      jobs: allMarkdownRemark(
+        filter: { fileAbsolutePath: { regex: "/education/" } }
+        sort: { fields: [frontmatter___date], order: DESC }
+      ) {
+        edges {
+          node {
+            frontmatter {
+              title
+              company
+              location
+              range
+              url
+              department
+              shortCompany
+            }
+            html
+          }
+        }
+      }
+    }
+  `);
+
+  const jobsData = data.jobs.edges;
+
+  const [activeTabId, setActiveTabId] = useState(0);
+  const [tabFocus, setTabFocus] = useState(null);
+  const tabs = useRef([]);
   const revealContainer = useRef(null);
   const prefersReducedMotion = usePrefersReducedMotion();
 
@@ -125,65 +193,121 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['JavaScript (ES6+)', 'TypeScript', 'React', 'Eleventy', 'Node.js', 'WordPress'];
+  const focusTab = () => {
+    if (tabs.current[tabFocus]) {
+      tabs.current[tabFocus].focus();
+      return;
+    }
+    // If we're at the end, go to the start
+    if (tabFocus >= tabs.current.length) {
+      setTabFocus(0);
+    }
+    // If we're at the start, move to the end
+    if (tabFocus < 0) {
+      setTabFocus(tabs.current.length - 1);
+    }
+  };
+
+  // Only re-run the effect if tabFocus changes
+  useEffect(() => focusTab(), [tabFocus]);
+
+  // Focus on tabs when using up & down arrow keys
+  const onKeyDown = e => {
+    switch (e.key) {
+      case KEY_CODES.ARROW_UP: {
+        e.preventDefault();
+        setTabFocus(tabFocus - 1);
+        break;
+      }
+
+      case KEY_CODES.ARROW_DOWN: {
+        e.preventDefault();
+        setTabFocus(tabFocus + 1);
+        break;
+      }
+
+      default: {
+        break;
+      }
+    }
+  };
 
   return (
-    <StyledAboutSection id="education" ref={revealContainer}>
-      <h2 className="numbered-heading">教育经历</h2>
+    <StyledEducationSection id="education" ref={revealContainer}>
+      <h2 className="numbered-heading"> 教育经历 </h2>
 
       <div className="inner">
-        <StyledText>
-          <div>
-            <p>
-              Hello! My name is Brittany and I enjoy creating things that live on the internet. My
-              interest in web development started back in 2012 when I decided to try editing custom
-              Tumblr themes — turns out hacking together a custom reblog button taught me a lot
-              about HTML &amp; CSS!
-            </p>
+        <StyledTabList role="tablist" aria-label="Job tabs" onKeyDown={e => onKeyDown(e)}>
+          {jobsData &&
+            jobsData.map(({ node }, i) => {
+              const { company, shortCompany } = node.frontmatter;
+              return (
+                <StyledTabButton
+                  key={i}
+                  isActive={activeTabId === i}
+                  onClick={() => setActiveTabId(i)}
+                  ref={el => (tabs.current[i] = el)}
+                  id={`tab-${i}`}
+                  role="tab"
+                  tabIndex={activeTabId === i ? '0' : '-1'}
+                  aria-selected={activeTabId === i ? true : false}
+                  aria-controls={`panel-${i}`}>
+                  <span>{shortCompany ?? company}</span>
+                </StyledTabButton>
+              );
+            })}
+          <StyledHighlight activeTabId={activeTabId} />
+        </StyledTabList>
 
-            <p>
-              Fast-forward to today, and I’ve had the privilege of working at{' '}
-              <a href="https://us.mullenlowe.com/">an advertising agency</a>,{' '}
-              <a href="https://starry.com/">a start-up</a>,{' '}
-              <a href="https://www.apple.com/">a huge corporation</a>, and{' '}
-              <a href="https://scout.camd.northeastern.edu/">a student-led design studio</a>. My
-              main focus these days is building accessible, inclusive products and digital
-              experiences at <a href="https://upstatement.com/">Upstatement</a> for a variety of
-              clients.
-            </p>
+        <StyledTabPanels>
+          {jobsData &&
+            jobsData.map(({ node }, i) => {
+              const { frontmatter, html } = node;
+              const { title, url, company, range, department } = frontmatter;
 
-            <p>
-              I also recently{' '}
-              <a href="https://www.newline.co/courses/build-a-spotify-connected-app">
-                launched a course
-              </a>{' '}
-              that covers everything you need to build a web app with the Spotify API using Node
-              &amp; React.
-            </p>
+              const companyLabel = `@ ${company}`;
+              const CompanyElement = () => {
+                if (url) {
+                  return (
+                    <a href={url} className="inline-link company">
+                      {companyLabel}
+                    </a>
+                  );
+                } else {
+                  return <span className="inline-link company">{companyLabel}</span>;
+                }
+              };
+              return (
+                <CSSTransition key={i} in={activeTabId === i} timeout={250} classNames="fade">
+                  <StyledTabPanel
+                    id={`panel-${i}`}
+                    role="tabpanel"
+                    tabIndex={activeTabId === i ? '0' : '-1'}
+                    aria-labelledby={`tab-${i}`}
+                    aria-hidden={activeTabId !== i}
+                    hidden={activeTabId !== i}>
+                    <h3>
+                      <div>
+                        {title} {!department && <CompanyElement />}
+                      </div>
+                      {department && (
+                        <div>
+                          {department} <CompanyElement />
+                        </div>
+                      )}
+                    </h3>
 
-            <p>Here are a few technologies I’ve been working with recently:</p>
-          </div>
+                    <p className="range">{range}</p>
 
-          <ul className="skills-list">
-            {skills && skills.map((skill, i) => <li key={i}>{skill}</li>)}
-          </ul>
-        </StyledText>
-
-        <StyledPic>
-          <div className="wrapper">
-            <StaticImage
-              className="img"
-              src="../../../static/me.jpeg"
-              width={500}
-              quality={95}
-              formats={['AUTO', 'WEBP', 'AVIF']}
-              alt="Headshot"
-            />
-          </div>
-        </StyledPic>
+                    <div dangerouslySetInnerHTML={{ __html: html }} />
+                  </StyledTabPanel>
+                </CSSTransition>
+              );
+            })}
+        </StyledTabPanels>
       </div>
-    </StyledAboutSection>
+    </StyledEducationSection>
   );
 };
 
-export default About;
+export default Education;

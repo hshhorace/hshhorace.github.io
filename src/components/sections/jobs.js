@@ -8,15 +8,13 @@ import sr from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
 
 const StyledJobsSection = styled.section`
-  max-width: 700px;
-
   .inner {
     display: flex;
-
+    margin: 0 auto;
+    max-width: 900px;
     @media (max-width: 600px) {
       display: block;
     }
-
     // Prevent container from jumping
     @media (min-width: 700px) {
       min-height: 340px;
@@ -244,7 +242,7 @@ const Jobs = () => {
 
   return (
     <StyledJobsSection id="jobs" ref={revealContainer}>
-      <h2 className="numbered-heading">Where I’ve Worked</h2>
+      <h2 className="numbered-heading">实习经历</h2>
 
       <div className="inner">
         <StyledTabList role="tablist" aria-label="Job tabs" onKeyDown={e => onKeyDown(e)}>
